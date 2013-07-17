@@ -1,6 +1,7 @@
 import sys
 import gspread
 import argparse
+import json
 from list_converter import ListConverter
 
 def parse_args(args):
@@ -25,6 +26,6 @@ def spreadsheet_to_json(args):
     
     data = sh.sheet1.get_all_values()
     
-    print converter.to_dict(data)
+    print json.dumps(converter.to_dict(data))
 
 spreadsheet_to_json(sys.argv[1:])
