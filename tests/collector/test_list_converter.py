@@ -1,11 +1,11 @@
 import unittest
 from hamcrest import *
-from collector.json_converter import JsonConverter
+from collector.list_converter import ListConverter
 
-class TestJsonConverter(unittest.TestCase):
+class TestListConverter(unittest.TestCase):
 
-    def test_it_converts_list_of_lists_into_json(self):
-        converter = JsonConverter()
+    def test_it_converts_list_of_lists_into_dict(self):
+        converter = ListConverter()
         data = [
             ['Column1', 'Column2', 'Column3'],
             ['Value11', 'Value12', 'Value13'],
@@ -18,4 +18,4 @@ class TestJsonConverter(unittest.TestCase):
             { 'Column1': 'Value31', 'Column2': 'Value32', 'Column3': 'Value33'}
         ]
         
-        assert_that(converter.convert(data), is_(expected_json))
+        assert_that(converter.to_dict(data), is_(expected_json))

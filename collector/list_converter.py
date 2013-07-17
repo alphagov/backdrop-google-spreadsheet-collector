@@ -1,7 +1,7 @@
 
-class JsonConverter(object):
+class ListConverter(object):
 
-    def convert(self, data):
+    def to_dict(self, data):
         header, rows = data[0], data[1:]
 
         def row_to_dict(row):
