@@ -13,8 +13,14 @@ def parse_args(args):
                         required=True)
 
     return parser.parse_args(args)
+
+def get_google_spreadsheet_data(username, password, key):
+    google = gspread.login(username, password)
+    spreadsheet = google.open_by_key(key)
     
-def to_dict(data):
+    return spreadsheet.sheet1.get_all_values()
+    
+def convert_to_records(data):
     header, rows = data[0], data[1:]
 
     def maybe_convert_to_number(s):
@@ -32,10 +38,8 @@ def to_dict(data):
 
 def spreadsheet_to_json(args):
     arguments = parse_args(args)
+    raw_data = get_google_spreadsheet_data(arguments.username,
+                                           arguments.password,
+                                           arguments.key)
 
-    gs = gspread.login(arguments.username, arguments.password)
-    sh = gs.open_by_key(arguments.key)
-    
-    data = sh.sheet1.get_all_values()
-    
-    print json.dumps(to_dict(data))
+    print json.dumps(convert_to_records(raw_data))
