@@ -2,7 +2,6 @@ import sys
 import gspread
 import argparse
 import json
-from list_converter import ListConverter
 
 def parse_args(args):
     parser = argparse.ArgumentParser()
@@ -15,17 +14,28 @@ def parse_args(args):
 
     return parser.parse_args(args)
     
+def to_dict(data):
+    header, rows = data[0], data[1:]
+
+    def maybe_convert_to_number(s):
+        try:
+            return int(s)
+        except (ValueError, TypeError):
+            return s
+
+    def row_to_dict(row):
+        converted_row = map(maybe_convert_to_number, row)
+        return dict(zip(header, converted_row))
+
+    return map(row_to_dict, rows)      
+
 
 def spreadsheet_to_json(args):
     arguments = parse_args(args)
 
-    converter = ListConverter()
-    
     gs = gspread.login(arguments.username, arguments.password)
     sh = gs.open_by_key(arguments.key)
     
     data = sh.sheet1.get_all_values()
     
-    print json.dumps(converter.to_dict(data))
-
-spreadsheet_to_json(sys.argv[1:])
+    print json.dumps(to_dict(data))

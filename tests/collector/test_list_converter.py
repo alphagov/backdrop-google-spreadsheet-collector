@@ -1,11 +1,10 @@
 import unittest
 from hamcrest import *
-from collector.list_converter import ListConverter
+from collector.spreadsheet_to_json import to_dict
 
 class TestListConverter(unittest.TestCase):
 
     def test_it_converts_list_of_lists_into_dict(self):
-        converter = ListConverter()
         data = [
             ['Column1', 'Column2', 'Column3'],
             ['Value11', 'Value12', 'Value13'],
@@ -18,7 +17,7 @@ class TestListConverter(unittest.TestCase):
             { 'Column1': 'Value31', 'Column2': 'Value32', 'Column3': 'Value33'}
         ]
         
-        assert_that(converter.to_dict(data), is_(expected_output))
+        assert_that(to_dict(data), is_(expected_output))
 
     def test_it_converts_only_an_integer_to_a_number(self):
         data = [
@@ -29,4 +28,4 @@ class TestListConverter(unittest.TestCase):
             { 'IntegerColumn': 301, 'FloatColumn': '42.35', 'StringColumn': 'This is still a string' }
         ]
 
-        assert_that(ListConverter().to_dict(data), is_(expected_output))
+        assert_that(to_dict(data), is_(expected_output))
