@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/alphagov/backdrop-google-spreadsheet-collector)](https://travis-ci.org/alphagov/backdrop-google-spreadsheet-collector)
+
 What is it?
 ===========
 
