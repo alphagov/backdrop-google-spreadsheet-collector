@@ -1,0 +1,5 @@
+nose
+PyHamcrest
+Mock
+pep8
+coverage==3.6
