@@ -1,6 +1,8 @@
+# coding=utf8
 import unittest
 from hamcrest import *
 from collector.spreadsheet_to_json import convert_to_records
+import json
 
 class TestListToRecordsConversion(unittest.TestCase):
 
@@ -29,3 +31,12 @@ class TestListToRecordsConversion(unittest.TestCase):
         ]
 
         assert_that(convert_to_records(data), is_(expected_records))
+
+    def test_it_handles_encoded_characters_correctly(self):
+        data = [
+            ['Heading1', u'Heading with pound sign \xa3', 'Heading3'],
+            [u'\xa34.50', 'text', 'more text']
+        ]
+        expected_json = '[{"Heading with pound sign \u00a3": "text", "Heading3": "more text", "Heading1": "\u00a34.50"}]'
+
+        assert_that(json.dumps(convert_to_records(data)), is_(expected_json))

@@ -21,16 +21,18 @@ def get_google_spreadsheet_data(username, password, key):
     return spreadsheet.sheet1.get_all_values()
     
 def convert_to_records(data):
+    """Transforms a list of lists into a list of dictionaries, where data[0]
+       is the header row of data"""
     header, rows = data[0], data[1:]
 
-    def maybe_convert_to_number(s):
+    def process_cell(s):
         try:
             return int(s)
         except (ValueError, TypeError):
             return s
 
     def row_to_dict(row):
-        converted_row = map(maybe_convert_to_number, row)
+        converted_row = map(process_cell, row)
         return dict(zip(header, converted_row))
 
     return map(row_to_dict, rows)      
