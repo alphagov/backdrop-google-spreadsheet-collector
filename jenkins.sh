@@ -9,6 +9,13 @@ VIRTUALENV_DIR=/var/tmp/virtualenvs/$(echo ${JOB_NAME} | tr ' ' '-')
 PIP_DOWNLOAD_CACHE=/var/tmp/pip_download_cache
 
 basedir=$(dirname $0)
+outdir="$basedir/out"
+
+# cleanup output dir
+mkdir -p "$outdir"
+rm -f "$outdir/*"
+rm -f ".coverage"
+
 
 # create empty virtualenv
 virtualenv --clear --no-site-packages $VIRTUALENV_DIR
