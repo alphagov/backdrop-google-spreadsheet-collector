@@ -16,4 +16,5 @@ source $VIRTUALENV_DIR/bin/activate
 
 pip install -r requirements_for_tests.txt
 
-nosetests
+nosetests -v --with-xunit --with-coverage --cover-package=collector --xunit-file=$outdir/nosetests.xml
+python -m coverage.__main__ xml --include=collector* -o "$outdir/coverage.xml"
