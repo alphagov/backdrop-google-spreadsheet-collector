@@ -5,7 +5,8 @@ import json
 
 def parse_args(args):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--doc', help="The config.json key for the document you want", required=True)
+    parser.add_argument('--doc', help="The key in the configuration file for the document you want", required=True)
+    parser.add_argument('--config', help="The configuration file", required=True)
     return parser.parse_args(args)
 
 def get_google_spreadsheet_data(username, password, key):
@@ -34,10 +35,11 @@ def convert_to_records(data):
 
 def spreadsheet_to_json(args):
     arguments = parse_args(args)
-    config = json.loads(open("config.json").read())
-    this_config = config[arguments.doc]
-    raw_data = get_google_spreadsheet_data(this_config['username'],
-                                           this_config['password'],
-                                           this_config['key'])
+    with open(arguments.config) as f:
+        config = json.loads(f.read())
+        this_config = config[arguments.doc]
+        raw_data = get_google_spreadsheet_data(this_config['username'],
+                                               this_config['password'],
+                                               this_config['key'])
 
-    print json.dumps(convert_to_records(raw_data))
+        sys.stdout.write(json.dumps(convert_to_records(raw_data)))
