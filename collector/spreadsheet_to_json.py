@@ -3,17 +3,22 @@ import gspread
 import argparse
 import json
 
+
 def parse_args(args):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--doc', help="The key in the configuration file for the document you want", required=True)
-    parser.add_argument('--config', help="The configuration file", required=True)
+    parser.add_argument('--doc', help="The key in the configuration file for "
+                                      "the document you want", required=True)
+    parser.add_argument('--config', help="The configuration file",
+                        required=True)
     return parser.parse_args(args)
+
 
 def get_google_spreadsheet_data(username, password, key):
     google = gspread.login(username, password)
     spreadsheet = google.open_by_key(key)
 
     return spreadsheet.sheet1.get_all_values()
+
 
 def convert_to_records(data):
     """Transforms a list of lists into a list of dictionaries, where data[0]
