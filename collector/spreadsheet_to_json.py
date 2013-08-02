@@ -6,10 +6,9 @@ import json
 
 def parse_args(args):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--doc', help="The key in the configuration file for "
-                                      "the document you want", required=True)
-    parser.add_argument('--config', help="The configuration file",
-                        required=True)
+    parser.add_argument('doc', help="The key in the configuration file for "
+                                      "the document you want")
+    parser.add_argument('config', help="The configuration file")
     return parser.parse_args(args)
 
 

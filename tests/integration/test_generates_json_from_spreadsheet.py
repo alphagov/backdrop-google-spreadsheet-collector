@@ -25,7 +25,7 @@ class TestJsonGeneratedFromSpreadsheet(unittest.TestCase):
 
         mock_spreadsheet_data.return_value = self.data
 
-        spreadsheet_to_json(("--doc doc_name --config %s" % f.name).split())
+        spreadsheet_to_json(("doc_name %s" % f.name).split())
 
         mock_stdout.assert_called_with('[{"foo": 1, "bar": 2, "zap": 3}, '
                                        '{"foo": 4, "bar": 5, "zap": 6}]')
