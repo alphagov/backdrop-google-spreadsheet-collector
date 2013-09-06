@@ -1,2 +1,2 @@
-gspread
-argparse
+gspread==0.1.0
+argparse==1.2.1
